@@ -2,6 +2,7 @@ from http.client import HTTPResponse
 from re import S
 from tkinter.tix import Select
 from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 from django.shortcuts import render
@@ -22,15 +23,17 @@ def movieApi(request,Title=''):
         Movies = Movie.objects.all()
         movie_serializer = MovieSerializer(Movies,many = True)
         return JsonResponse(movie_serializer.data,safe=False)
-    elif request.method=='PUT':
-        movieData =JSONParser().parse(request)
-        movie = Movie.objects.get(Title = movieData['Title'])
-        movie_serializer = MovieSerializer(movie,data =movieData )
-        if movie_serializer.is_valid():
-            movie_serializer.save()
-            return JsonResponse("Success",safe=False)
-        return JsonResponse("Failed to update",safe=False)
-
+    elif request.method == 'PUT':
+        movieData = JSONParser().parse(request)
+        try:
+            movie = Movie.objects.get(Title=movieData['Title'])
+            movie_serializer = MovieSerializer(movie, data=movieData)
+            if movie_serializer.is_valid():
+                movie_serializer.save()
+                return JsonResponse("Success", safe=False)
+            return JsonResponse("Failed to update", safe=False)
+        except ObjectDoesNotExist:
+            return JsonResponse("Movie not found", status=404, safe=False)
 
 
 def actorApi(request):
