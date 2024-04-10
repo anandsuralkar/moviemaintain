@@ -44,3 +44,6 @@ Thumbs.db
 
 *.pyc
 *.pyc
+/envi/Lib/site-packages/django/contrib/admin/templatetags/*.pyc
+/envi/Lib/site-packages/django/core/checks/*.pyc
+/envi/Lib/site-packages/rest_framework/utils/*.pyc
