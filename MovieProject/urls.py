@@ -17,8 +17,16 @@ from django.contrib import admin
 from django.urls import path,re_path as url
 from django.conf.urls import include
 from MovieApp import urls,views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^',include(urls))
+    
+    path('', TemplateView.as_view(template_name='index.html')),
+    path('moviePage', TemplateView.as_view(template_name='index.html')),
+    path('actorPage', TemplateView.as_view(template_name='index.html')),
+    path('api/', include(urls)),  # Include MovieApp URLs
+    
+    #path('<path:route>', TemplateView.as_view(template_name='index.html')),
+
 ]

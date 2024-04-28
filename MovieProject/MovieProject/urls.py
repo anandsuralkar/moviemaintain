@@ -8,7 +8,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html')),  # Serve index.html for the root URL
-    path('', include(urls)),  # Include MovieApp URLs
-]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+    path('', TemplateView.as_view(template_name='index.html')),
+    path('moviePage', TemplateView.as_view(template_name='index.html')),
+    path('actorPage', TemplateView.as_view(template_name='index.html')),
+    path('api/', include(urls)),  # Include MovieApp URLs
+    
+    
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
